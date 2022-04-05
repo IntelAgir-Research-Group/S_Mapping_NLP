@@ -1,6 +1,6 @@
 from lxml import etree
 
-DBLP_XML = '../data/dblp-2022-04-01.xml'
+DBLP_XML = './dblp-2022-04-01.xml'
 YEAR_MIN = 2007
 YEAR_MAX = 2022
 KEYWORDS = ['authorship']
