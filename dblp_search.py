@@ -1,9 +1,11 @@
 from lxml import etree
 
 DBLP_XML = './dblp-2022-04-01.xml'
-YEAR_MIN = 2007
+YEAR_MIN = 1964
 YEAR_MAX = 2022
-KEYWORDS = ['authorship']
+MAINWORDS = ['author', 'text']
+BADWORDS = ['texture', 'context']
+KEYWORDS = ['indentification', 'attribution', 'verification', 'classification', 'recognition']
 VENUES = tuple([
 	'conf/aaai',
 	'conf/ijcai',
@@ -16,7 +18,6 @@ VENUES = tuple([
 	'conf/mdai',
 	'conf/icaart',
 	'conf/pricai',
-	'conf/icaart',
 	'conf/acl',
 	'conf/coling',
 	'conf/eacl',
@@ -37,6 +38,34 @@ VENUES = tuple([
 	'conf/conll',
 	'conf/ijcnlp',
 	'conf/inlg',
+	'journals/ai',
+	'journals/artmed',
+	'journals/jair',
+	'journals/mima',
+	'journals/aicom',
+	'journals/aai',
+	'journals/connection',
+	'journals/eaai',
+	'journals/ijprai',
+	'journals/coling',
+	'journals/tnn',
+	'journals/nn',
+	'journals/pr',
+	'journals/prl',
+	'journals/jmlr',
+	'journals/ml',
+	'journals/ir',
+	'journals/csl',
+	'journals/nle',
+	'journals/tslp',
+	'journals/talip',
+	'journals/jasis',
+	'journals/csur',
+	'journals/lre',
+	'journals/apin',
+	'journals/tifs',
+	'journals/jql',
+	'journals/lalc'
 ])
 
 # Iterate over a large-sized xml file without the need to store it in memory in
@@ -78,7 +107,7 @@ if __name__ == "__main__":
 
             # If the title contains any of the keywords (case-sensitive) add to
             # result.
-            if any(keyword in title for keyword in KEYWORDS):
+            if ((any(mainword in title for mainword in MAINWORDS) and not any(badword in title for badword in BADWORDS)) and any(keyword in title for keyword in KEYWORDS)):
                 # Merge the names of all authors of the work.
                 authors = ' & '.join(''.join(author.itertext()) for author in
                     dblp_entry.findall('author'))
